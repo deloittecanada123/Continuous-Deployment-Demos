@@ -54,6 +54,7 @@ namespace Microsoft.BotBuilderSamples.Bots
             string key = "c5350e440b0e4f61884b61e5786962cc";
             string endpoint = "https://ai-meetup-entity-rec.cognitiveservices.azure.com/";
 
+            // Add language detction here for demo - Aris
             
 
             var replyText = $"Your detected language is: unknown to me.";
