@@ -54,10 +54,23 @@ namespace Microsoft.BotBuilderSamples.Bots
             string key = "c5350e440b0e4f61884b61e5786962cc";
             string endpoint = "https://ai-meetup-entity-rec.cognitiveservices.azure.com/";
 
-            // Add language detction here for demo - Aris
-            
+            //TODO (demo): Add language detction here for demo - Aris
 
-            var replyText = $"Your detected language is: unknown to me.";
+            var credentials = new ApiKeyServiceClientCredentials(key);
+            var client = new TextAnalyticsClient(credentials)
+            {
+                Endpoint = endpoint
+            };
+
+            var inputDocuments = new LanguageBatchInput(
+                new List<LanguageInput>
+                {
+                    new LanguageInput("1", turnContext.Activity.Text)
+                });
+
+            var langResults = await client.DetectLanguageBatchAsync(inputDocuments);
+
+            var replyText = $"Your detected language is: {langResults.Documents[0].DetectedLanguages[0].Name}";
             await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
         }
 
